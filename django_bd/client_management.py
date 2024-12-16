@@ -178,6 +178,8 @@ class SearchClientFrame(wx.Frame):
             self.result_list.Append(f"{cliente.nombre} {cliente.apellido}")
 
 
+
+
 class AgregarCliente(wx.Frame):
     def __init__(self, title):
         super().__init__(None, title=title, size=(400, 500))

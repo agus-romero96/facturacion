@@ -9,4 +9,4 @@ django.setup()
 from facturacion.models import Cliente
 
 def ObtenerClientes():
-    return [str(cliente) for cliente in Cliente.objects.all()]  # Devuelve una lista de clientes
+    return [f"{cliente.cedula} - {cliente.nombre} {cliente.apellido}" for cliente in Cliente.objects.all()]
