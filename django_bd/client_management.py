@@ -18,11 +18,11 @@ class ClientManagementFrame(wx.Frame):
 
         # Configuración final
         self.panel.SetSizer(self.sizer)
-        self.populate_clients()
+        self.RetornarDatos()
 
         self.Show()
 
-    def populate_clients(self):
+    def RetornarDatos(self):
         """Llena la lista con los clientes de la base de datos."""
         self.listbox.Clear()  # Limpia la lista antes de rellenarla
         clients = ObtenerClientes()  # Obtener clientes de la base de datos
@@ -44,32 +44,32 @@ class ClientManagementFrame(wx.Frame):
         update_item = menu.Append(wx.ID_ANY, "Actualizar/Modificar")
 
         # Conectar las acciones
-        self.Bind(wx.EVT_MENU, lambda evt: self.delete_client(selected_client), delete_item)
-        self.Bind(wx.EVT_MENU, lambda evt: self.update_client(selected_client), update_item)
+        self.Bind(wx.EVT_MENU, lambda evt: self.EliminarCliente(selected_client), delete_item)
+        self.Bind(wx.EVT_MENU, lambda evt: self.ActualizarCliente(selected_client), update_item)
 
         # Mostrar el menú
         self.PopupMenu(menu)
         menu.Destroy()
 
-    def delete_client(self, client_str):
+    def EliminarCliente(self, client_str):
         """Elimina un cliente de la base de datos."""
         try:
             cedula = client_str.split(" ")[0]  # Extraer la cédula del cliente
             cliente = Cliente.objects.get(cedula=cedula)
             cliente.delete()
             wx.MessageBox("Cliente eliminado con éxito.", "Éxito", wx.ICON_INFORMATION)
-            self.populate_clients()  # Actualizar la lista
+            self.RetornarDatos()  # Actualizar la lista
         except Exception as e:
             wx.MessageBox(f"Error al eliminar el cliente: {e}", "Error", wx.ICON_ERROR)
 
-    def update_client(self, client_str):
+    def ActualizarCliente(self, client_str):
         """Abre una ventana para actualizar los datos del cliente seleccionado."""
         cedula = client_str.split(" ")[0]  # Extraer la cédula del cliente
         cliente = Cliente.objects.get(cedula=cedula)
-        UpdateClientFrame(cliente)  # Pasar el cliente seleccionado a la ventana de actualización
+        ActualizarDatos(cliente)  # Pasar el cliente seleccionado a la ventana de actualización
 
 
-class UpdateClientFrame(wx.Frame):
+class ActualizarDatos(wx.Frame):
     def __init__(self, cliente):
         super().__init__(None, title="Actualizar Cliente", size=(400, 500))
         self.cliente = cliente
