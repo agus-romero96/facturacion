@@ -20,7 +20,7 @@ class GestionProductos(wx.Frame):
         self.toolbar.Add(self.btn_eliminar, 0, wx.ALL, 5)
         
         # Vincular eventos
-        self.btn_nuevo.Bind(wx.EVT_BUTTON, self.on_nuevo)
+        #         self.btn_nuevo.Bind(wx.EVT_BUTTON, self.on_nuevo)
         self.btn_editar.Bind(wx.EVT_BUTTON, self.on_editar)
         self.btn_eliminar.Bind(wx.EVT_BUTTON, self.on_eliminar)
         
